@@ -4,6 +4,7 @@ set -euo pipefail
 
 # Default path to GAM. Update if different on your system
 GAM_CMD="gam"
+DOMAIN="burningman.org"
 
 usage() {
   cat <<USAGE
@@ -29,6 +30,10 @@ to_lower() {
 
 Test_Exists() {
   local email="$1"
+  local mode="${2:-}"
+  if [[ $mode == group ]]; then
+    "$GAM_CMD" info group "$email" >/dev/null 2>&1 && return 0 || return 1
+  fi
   if "$GAM_CMD" whatis "$email" 2>&1 | grep -Eq "Service not applicable|Entity does not exist"; then
     return 1
   fi
@@ -37,6 +42,7 @@ Test_Exists() {
 
 Show_Group_Summary() {
   local groupName="$1"
+  local block=""
   echo -e "\n=== GROUP SUMMARY ==="
   "$GAM_CMD" whatis "$groupName" 2>&1 | while IFS= read -r line; do
     trimmed="${line##*( )}"
@@ -65,9 +71,9 @@ Show_Group_Summary() {
 
 Get_Template() {
   case "$(to_lower "$1")" in
-    a* ) echo "aliastemplate@burningman.org alias";;
-    an* ) echo "announcetemplate@burningman.org announce";;
-    d* ) echo "discussiontemplate@burningman.org discussion";;
+    a* ) echo "aliastemplate@$DOMAIN alias";;
+    an* ) echo "announcetemplate@$DOMAIN announce";;
+    d* ) echo "discussiontemplate@$DOMAIN discussion";;
     * ) return 1;;
   esac
 }
@@ -99,15 +105,15 @@ if [[ -z $GROUP ]]; then
   while :; do
     read -p "Enter the group email: " GROUP
     GROUP=${GROUP%%@*}
-    if Test_Exists "$GROUP"; then
-      echo "Group already exists. Try a new address."; Show_Group_Summary "$GROUP@burningman.org"; GROUP="";
+    if Test_Exists "$GROUP@$DOMAIN" group; then
+      echo "Group already exists. Try a new address."; Show_Group_Summary "$GROUP@$DOMAIN"; GROUP="";
     else
       break
     fi
   done
 else
   GROUP=${GROUP%%@*}
-  if Test_Exists "$GROUP"; then
+  if Test_Exists "$GROUP@$DOMAIN" group; then
     echo "CRITICAL ERROR: Group already exists." >&2
     exit 1
   fi
@@ -198,7 +204,7 @@ if ! $SHOULD_TEST; then
   "$GAM_CMD" create group "$GROUP" copyfrom "$TEMPLATE" name "$GROUP $TYPE Group" description "$DESC"
   sleep 3
   "$GAM_CMD" update group "$GROUP" add owner "$MAILPREF" user "$OWNER"
-  if Test_Exists "$GROUP"; then
+  if Test_Exists "$GROUP@$DOMAIN" group; then
     echo -e "\nGroup creation successful"
     done=false
     while ! $done; do
@@ -227,7 +233,7 @@ if ! $SHOULD_TEST; then
         fi
       fi
     done
-    Show_Group_Summary "$GROUP@burningman.org"
+    Show_Group_Summary "$GROUP@$DOMAIN"
   else
     echo -e "\nERROR: Group creation failed." >&2
   fi
