@@ -44,5 +44,5 @@ If you run gambmg with no parameters, you will be prompted interactively.
 Updates:
 
 	7/2/25 	Added additional add-user loop after group creation.
-               Added **curated** group summary after group creation, and if the group address already exists.
+               	Added curated group summary after group creation, and if the group address already exists.
   	7/2/25 	Added MacOS Bash Version in GAMBMG.sh
