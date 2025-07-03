@@ -3,7 +3,7 @@
 set -euo pipefail
 
 # Default path to GAM. Update if different on your system
-gam="gam"
+GAM_CMD="gam"
 
 usage() {
   cat <<USAGE
@@ -23,6 +23,10 @@ ABOUT
 }
 
 # Helpers
+to_lower() {
+  printf '%s' "$1" | tr '[:upper:]' '[:lower:]'
+}
+
 Test_Exists() {
   local email="$1"
   if "$GAM_CMD" whatis "$email" 2>&1 | grep -Eq "Service not applicable|Entity does not exist"; then
@@ -60,7 +64,7 @@ Show_Group_Summary() {
 }
 
 Get_Template() {
-  case "${1,,}" in
+  case "$(to_lower "$1")" in
     a* ) echo "aliastemplate@burningman.org alias";;
     an* ) echo "announcetemplate@burningman.org announce";;
     d* ) echo "discussiontemplate@burningman.org discussion";;
@@ -86,9 +90,9 @@ while [[ $# -gt 0 ]]; do
 done
 
 SHOULD_FORCE=false
-[[ ${FORCE,,} == y* ]] && SHOULD_FORCE=true
+[[ $(to_lower "$FORCE") == y* ]] && SHOULD_FORCE=true
 SHOULD_TEST=false
-[[ ${TESTMODE,,} == y* ]] && SHOULD_TEST=true
+[[ $(to_lower "$TESTMODE") == y* ]] && SHOULD_TEST=true
 
 # Interactive prompts for missing args
 if [[ -z $GROUP ]]; then
@@ -149,7 +153,7 @@ fi
 if [[ -z $MAILPREF ]]; then
   while :; do
     read -p "Should the owner receive mail from the group? [y/n] " resp
-    case ${resp,,} in
+    case $(to_lower "$resp") in
       y*) MAILPREF="allmail"; break;;
       n*) MAILPREF="nomail"; break;;
       *) echo "Please enter 'y' or 'n'.";;
@@ -179,7 +183,7 @@ echo "============================="
 if ! $SHOULD_FORCE; then
   while :; do
     read -p "DEPLOY AS PREVIEWED? [y/n] " conf
-    case ${conf,,} in
+    case $(to_lower "$conf") in
       y*) break;;
       n*) echo "Abort command received. No changes made."; exit 0;;
       *) echo "Please enter 'y' or 'n'.";;
@@ -200,7 +204,7 @@ if ! $SHOULD_TEST; then
     while ! $done; do
       read -p $'\nAdd additional users? [Y] Member / [O] Owner / [M] Manager / [N] No: ' opt
       role=""
-      case ${opt,,} in
+      case $(to_lower "$opt") in
         y*) role="member";;
         o*) role="owner";;
         m*) role="manager";;

@@ -9,9 +9,10 @@ mirrors the behaviour of the Windows PowerShell version but can be run
 directly from a standard Terminal. Ensure `gam` is installed and
 available on your `PATH` before running the script.
 
-	chmod +x <Path>
- 
- If you have permission errors when running gambmg
+       chmod +x <Path>
+
+If you receive a "Permission denied" error when running `gambmg`, ensure the
+script has execute permission by running `chmod +x /path/to/GAMBMG.sh`.
 
 ##Windows Usage
 
