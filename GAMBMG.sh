@@ -3,7 +3,7 @@
 set -euo pipefail
 
 # Default path to GAM. Update if different on your system
-GAM_CMD="gam"
+gam="gam"
 
 usage() {
   cat <<USAGE
