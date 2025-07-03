@@ -1,4 +1,5 @@
 GAMBMG_V2 for Windows Powershell - 6/3/2025
+GAMBMG_V2 for MacOS Shell/Bash - 7/2/2025
 
 ## macOS Usage
 
