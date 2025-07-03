@@ -43,3 +43,4 @@ Updates:
 
 	7/2/25 	Added additional add-user loop after group creation.
 		Added currated group summary after group creation, and if the group address already exists.
+  	7/2/25 	Added MacOS Bash Version in GAMBMG.sh
