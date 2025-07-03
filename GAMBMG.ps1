@@ -130,7 +130,8 @@ function Show-GroupSummary {
             $includeBlock = "members"
         }
 
-        # Collect aliases and member lines (indented beneath respective headers)
+        # Print alias and member lines (indented beneath respective headers; no
+        #   data is collected)
         elseif ($includeBlock -eq "aliases" -and $trimmed -match "^alias: ") {
             Write-Host "    $trimmed"
         }
