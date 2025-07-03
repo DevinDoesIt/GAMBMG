@@ -1,5 +1,12 @@
 GAMBMG_V2 for Windows Powershell - 6/3/2025
 
+## macOS Usage
+
+For macOS users a bash rewrite is provided as `GAMBMG.sh`. The script
+mirrors the behaviour of the Windows PowerShell version but can be run
+directly from a standard Terminal. Ensure `gam` is installed and
+available on your `PATH` before running the script.
+
 	This powershell script is designed to automate the creation 
 	of Google Groups for the Burning Man Project. 
 	
