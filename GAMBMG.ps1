@@ -10,13 +10,13 @@ param (
 
 # Assign internal booleans
 
-    switch -Wildcard ($Force.ToLower()) {
+    switch -Wildcard ([string]$Force).ToLower() {
         "y*" { $ShouldForce = $true }
         "n*" { $ShouldForce = $false }
         default { $ShouldForce = $false }
     }
 
-    switch -Wildcard ($TestMode.ToLower()) {
+    switch -Wildcard ([string]$TestMode).ToLower() {
         "y*" { $ShouldTestMode = $true }
         "n*" { $ShouldTestMode = $false }
         default { $ShouldTestMode = $false }
