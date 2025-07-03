@@ -1,6 +1,8 @@
 #!/bin/bash
 
 set -euo pipefail
+# Enable extended pattern matching for parameter expansion
+shopt -s extglob
 
 # Default path to GAM. Update if different on your system
 GAM_CMD="gam"
