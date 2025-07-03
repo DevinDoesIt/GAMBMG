@@ -18,7 +18,7 @@ script has execute permission by running `chmod +x /path/to/GAMBMG.sh`.
 
 Place in your Scripts Folder
 
-##About
+## About
 
 	This powershell script is designed to automate the creation 
 	of Google Groups for the Burning Man Project. 
@@ -33,7 +33,7 @@ Email:		devin@burningman.org
 
 Shamelessly stolen from Eric Haugen's Original bash shell script of the same name.
 
-##gambmg Usage
+## gambmg Usage
 
     -group <groupName>        : The group email prefix (without domain)
     
@@ -52,7 +52,7 @@ Shamelessly stolen from Eric Haugen's Original bash shell script of the same nam
 
 If you run gambmg with no parameters, you will be prompted interactively.
 
-##Updates
+## Updates
 
 	7/2/25 	Added additional add-user loop after group creation.
                	Added curated group summary after group creation, and if the group address already exists.
